@@ -1,7 +1,7 @@
 datadir = '/path to the MPS tensor for certain bond dimension/D';
 writedir = '/write path for certain bond dimension/D';
 d = 2; % dimension of 1-site physical Hilbert space
-N = 2; % number of sites G is supported from
+N = 2; % number of sites G is supported from, currently only N = 1,2,3,4 have been implemented
 p = 0; % momentum
 poddteven = true; % quantum number for the parity (p) and time reversal (t) symmetry
 D = 10; % bond dimension of MPS
