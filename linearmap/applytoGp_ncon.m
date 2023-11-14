@@ -1,6 +1,6 @@
-function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
+function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, podd, teven)
     sy = [0 -1i;1i 0];
-    if poddteven == true
+    if podd == 1 && teven == 1
         if N == 1
             G = reshape(x,d*ones(1,2*N));
         elseif N == 2
@@ -37,7 +37,7 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
             Gt = t*conj(GG)*t;
             G = reshape((GG + Gt')/2,d*ones(1,2*N));
         end
-    else
+    elseif podd == 0 && teven == 0
         if N == 1
             G = reshape(x,d*ones(1,2*N));
         elseif N == 2
@@ -74,6 +74,39 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
             Gt = t*conj(GG)*t;
             G = reshape((GG - Gt')/2,d*ones(1,2*N));
         end
+    elseif podd == 0 && teven == -1
+        if N == 1
+            G = reshape(x,d*ones(1,2*N));
+        elseif N == 2
+            G = reshape(x,[d,d,d,d]);
+            Gp = permute(G,[2 1 4 3]);
+            if p == 0
+                GG = reshape((G+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((G+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            G = reshape(GG,d*ones(1,2*N));
+        elseif N == 3
+            G = reshape(x,[d,d,d,d,d,d]);
+            Gp = permute(G,[3 2 1 6 5 4]);
+            if p == 0
+                GG = reshape((G+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((G+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            G = reshape(GG,d*ones(1,2*N));
+        elseif N == 4
+            G = reshape(x,[d,d,d,d,d,d,d,d]);
+            Gp = permute(G,[4 3 2 1 8 7 6 5]);
+            if p == 0
+                GG = reshape((G+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((G+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            G = reshape(GG,d*ones(1,2*N));
+        end
+    elseif podd == -1 && teven == -1
+        G = reshape(x,d*ones(1,2*N)); 
     end
 
     %G = reshape(x,d*ones(1,2*N));
@@ -106,7 +139,7 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
     yt = yt + getapplytoGoverlap_ncon_transpose(AL, G, R, N, g, yg);
     %y = reshape(yt,[d^(2*N),1]);
 
-    if poddteven == true
+    if podd == 1 && teven == 1
         if N == 1
             y = reshape(yt,[d^(2*N),1]);
         elseif N == 2
@@ -140,7 +173,7 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
             Gt = t*conj(GG)*t;
             y = reshape((GG + Gt')/2,[d^(2*N),1]);
         end    
-    else
+    elseif podd == 0 && teven == 0
         if N == 1
             y = reshape(yt,[d^(2*N),1]);
         elseif N == 2
@@ -173,6 +206,36 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, poddteven)
             t = kron(kron(kron(sy,sy),sy),sy);
             Gt = t*conj(GG)*t;
             y = reshape((GG - Gt')/2,[d^(2*N),1]);
-        end    
+        end 
+    elseif podd == 0 && teven == -1
+        if N == 1
+            y = reshape(yt,[d^(2*N),1]);
+        elseif N == 2
+            Gp = permute(yt,[2 1 4 3]);
+            if p == 0
+                GG = reshape((yt+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            y = reshape(GG,[d^(2*N),1]);
+        elseif N == 3
+            Gp = permute(yt,[3 2 1 6 5 4]);
+            if p == 0
+                GG = reshape((yt+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            y = reshape(GG,[d^(2*N),1]);
+        elseif N == 4
+            Gp = permute(yt,[4 3 2 1 8 7 6 5]);
+            if p == 0
+                GG = reshape((yt+Gp)/2,[d^N,d^N]);
+            else
+                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+            end
+            y = reshape(GG,[d^(2*N),1]);
+        end 
+    elseif podd == -1 && teven == -1
+        y = reshape(yt,[d^(2*N),1]);
     end
 end
