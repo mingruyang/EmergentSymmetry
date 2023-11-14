@@ -13,7 +13,7 @@ AR = load([datadir num2str(D) '/AR.mat']).AR;
 C = load([datadir num2str(D) '/C.mat']).C;
 R = C*C';
 L = C'*C;
-AR = {AR{1};AR{2}}; % for two-site unit cell
+AR = {AR{1};AR{2}}; % re-ordering the cell matrices
 ALt = reshape(cell2mat(AL),[D,d,D]);
 ARt = reshape(cell2mat(AR),[D,d,D]);
 
