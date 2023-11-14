@@ -14,7 +14,7 @@ C = load([datadir num2str(D) '/C.mat']).C;
 R = C*C';
 L = C'*C;
 AR = {AR{1};AR{2}}; % re-ordering the cell matrices
-ALt = reshape(cell2mat(AL),[D,d,D]);
+ALt = reshape(cell2mat(AL),[D,d,D]); % translate the cell matrices to a MPS tensor for ncon use
 ARt = reshape(cell2mat(AR),[D,d,D]);
 
 % solve the eigenvalue problem for D = 10
