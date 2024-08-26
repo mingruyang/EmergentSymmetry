@@ -137,105 +137,105 @@ function y = applytoGp_ncon(x, AL, AR, L, R, N, d, D, p, podd, teven)
     yt = yt + getapplytoGLoverlapp_ncon_transpose(AL, G, R, N, d, p, g, yg);
     yt = yt + getapplytoGRoverlapp_ncon_transpose(AR, G, L, N, d, p, g, yg);
     yt = yt + getapplytoGoverlap_ncon_transpose(AL, G, R, N, g, yg);
-    %y = reshape(yt,[d^(2*N),1]);
+    y = reshape(yt,[d^(2*N),1]);
 
-    if podd == 1 && teven == 1
-        if N == 1
-            y = reshape(yt,[d^(2*N),1]);
-        elseif N == 2
-            Gp = permute(yt,[2 1 4 3]);
-            if p == 0
-                GG = reshape((yt-Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(sy,sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG + Gt')/2,[d^(2*N),1]);
-        elseif N == 3
-            Gp = permute(yt,[3 2 1 6 5 4]);
-            if p == 0
-                GG = reshape((yt-Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(kron(sy,sy),sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG + Gt')/2,[d^(2*N),1]);
-        elseif N == 4
-            Gp = permute(yt,[4 3 2 1 8 7 6 5]);
-            if p == 0
-                GG = reshape((yt-Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(kron(kron(sy,sy),sy),sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG + Gt')/2,[d^(2*N),1]);
-        end    
-    elseif podd == 0 && teven == 0
-        if N == 1
-            y = reshape(yt,[d^(2*N),1]);
-        elseif N == 2
-            Gp = permute(yt,[2 1 4 3]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(sy,sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG - Gt')/2,[d^(2*N),1]);
-        elseif N == 3
-            Gp = permute(yt,[3 2 1 6 5 4]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(kron(sy,sy),sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG - Gt')/2,[d^(2*N),1]);
-        elseif N == 4
-            Gp = permute(yt,[4 3 2 1 8 7 6 5]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            t = kron(kron(kron(sy,sy),sy),sy);
-            Gt = t*conj(GG)*t;
-            y = reshape((GG - Gt')/2,[d^(2*N),1]);
-        end 
-    elseif podd == 0 && teven == -1
-        if N == 1
-            y = reshape(yt,[d^(2*N),1]);
-        elseif N == 2
-            Gp = permute(yt,[2 1 4 3]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            y = reshape(GG,[d^(2*N),1]);
-        elseif N == 3
-            Gp = permute(yt,[3 2 1 6 5 4]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            y = reshape(GG,[d^(2*N),1]);
-        elseif N == 4
-            Gp = permute(yt,[4 3 2 1 8 7 6 5]);
-            if p == 0
-                GG = reshape((yt+Gp)/2,[d^N,d^N]);
-            else
-                GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
-            end
-            y = reshape(GG,[d^(2*N),1]);
-        end 
-    elseif podd == -1 && teven == -1
-        y = reshape(yt,[d^(2*N),1]);
-    end
+    %if podd == 1 && teven == 1
+    %    if N == 1
+    %        y = reshape(yt,[d^(2*N),1]);
+    %    elseif N == 2
+    %        Gp = permute(yt,[2 1 4 3]);
+    %        if p == 0
+    %            GG = reshape((yt-Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(sy,sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG + Gt')/2,[d^(2*N),1]);
+    %    elseif N == 3
+    %        Gp = permute(yt,[3 2 1 6 5 4]);
+    %        if p == 0
+    %            GG = reshape((yt-Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(kron(sy,sy),sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG + Gt')/2,[d^(2*N),1]);
+    %    elseif N == 4
+    %        Gp = permute(yt,[4 3 2 1 8 7 6 5]);
+    %        if p == 0
+    %            GG = reshape((yt-Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^mod(N,2)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(kron(kron(sy,sy),sy),sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG + Gt')/2,[d^(2*N),1]);
+    %    end    
+    %elseif podd == 0 && teven == 0
+    %    if N == 1
+    %        y = reshape(yt,[d^(2*N),1]);
+    %    elseif N == 2
+    %        Gp = permute(yt,[2 1 4 3]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(sy,sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG - Gt')/2,[d^(2*N),1]);
+    %    elseif N == 3
+    %        Gp = permute(yt,[3 2 1 6 5 4]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(kron(sy,sy),sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG - Gt')/2,[d^(2*N),1]);
+    %    elseif N == 4
+    %        Gp = permute(yt,[4 3 2 1 8 7 6 5]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        t = kron(kron(kron(sy,sy),sy),sy);
+    %        Gt = t*conj(GG)*t;
+    %        y = reshape((GG - Gt')/2,[d^(2*N),1]);
+    %    end 
+    %elseif podd == 0 && teven == -1
+    %    if N == 1
+    %        y = reshape(yt,[d^(2*N),1]);
+    %    elseif N == 2
+    %        Gp = permute(yt,[2 1 4 3]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        y = reshape(GG,[d^(2*N),1]);
+    %    elseif N == 3
+    %        Gp = permute(yt,[3 2 1 6 5 4]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        y = reshape(GG,[d^(2*N),1]);
+    %    elseif N == 4
+    %        Gp = permute(yt,[4 3 2 1 8 7 6 5]);
+    %        if p == 0
+    %            GG = reshape((yt+Gp)/2,[d^N,d^N]);
+    %        else
+    %            GG = reshape((yt+(-1)^(mod(N,2)+1)*Gp)/2,[d^N,d^N]);
+    %        end
+    %        y = reshape(GG,[d^(2*N),1]);
+    %    end 
+    %elseif podd == -1 && teven == -1
+    %    y = reshape(yt,[d^(2*N),1]);
+    %end
 end
